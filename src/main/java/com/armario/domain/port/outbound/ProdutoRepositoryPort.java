@@ -10,4 +10,6 @@ public interface ProdutoRepositoryPort {
     Produto salvar(Produto produto);
     Optional<Produto> buscarPorId(UUID id);
     List<Produto> buscarTodos();
+    void deletar(UUID id);
+    boolean existePorId(UUID id);
 }
