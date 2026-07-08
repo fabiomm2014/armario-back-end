@@ -1,6 +1,6 @@
 package com.armario.config.security;
 
-import com.armario.domain.service.UsuarioService;
+import com.armario.domain.port.outbound.TokenProviderPort;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component
-public class JwtTokenProvider implements UsuarioService.JwtTokenProvider {
+public class JwtTokenProvider implements TokenProviderPort {
 
     private final SecretKey key;
     private final long expirationMs;

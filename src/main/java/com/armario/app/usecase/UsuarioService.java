@@ -1,8 +1,9 @@
-package com.armario.domain.service;
+package com.armario.app.usecase;
 
 import com.armario.domain.model.Usuario;
 import com.armario.domain.port.inbound.AutenticarUsuarioUseCase;
 import com.armario.domain.port.inbound.CadastrarUsuarioUseCase;
+import com.armario.domain.port.outbound.TokenProviderPort;
 import com.armario.domain.port.outbound.UsuarioRepositoryPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -12,14 +13,14 @@ public class UsuarioService implements CadastrarUsuarioUseCase, AutenticarUsuari
 
     private final UsuarioRepositoryPort repositoryPort;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenProviderPort tokenProviderPort;
 
     public UsuarioService(UsuarioRepositoryPort repositoryPort,
                           PasswordEncoder passwordEncoder,
-                          JwtTokenProvider jwtTokenProvider) {
+                          TokenProviderPort tokenProviderPort) {
         this.repositoryPort = repositoryPort;
         this.passwordEncoder = passwordEncoder;
-        this.jwtTokenProvider = jwtTokenProvider;
+        this.tokenProviderPort = tokenProviderPort;
     }
 
     @Override
@@ -38,10 +39,6 @@ public class UsuarioService implements CadastrarUsuarioUseCase, AutenticarUsuari
         if (!passwordEncoder.matches(senha, usuario.getSenha())) {
             throw new RuntimeException("Credenciais invalidas");
         }
-        return jwtTokenProvider.gerarToken(usuario.getLogin());
-    }
-
-    public interface JwtTokenProvider {
-        String gerarToken(String subject);
+        return tokenProviderPort.gerarToken(usuario.getLogin());
     }
 }

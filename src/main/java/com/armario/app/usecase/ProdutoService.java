@@ -1,4 +1,4 @@
-package com.armario.domain.service;
+package com.armario.app.usecase;
 
 import com.armario.domain.model.Produto;
 import com.armario.domain.port.inbound.AtualizarProdutoUseCase;
