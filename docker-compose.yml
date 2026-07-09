@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: armario-postgres
+    environment:
+      POSTGRES_DB: armario
+      POSTGRES_USER: armario_app
+      # Senha lida do seu ambiente (mesma que a app usa via DB_PASSWORD).
+      # Defina DB_PASSWORD antes de subir: export DB_PASSWORD='sua-senha'
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?defina DB_PASSWORD no ambiente}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U armario_app -d armario"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  postgres_data:
