@@ -10,12 +10,23 @@ API RESTful em Spring Boot 3 (Java 17) com Clean Architecture / Hexagonal (Porta
 
 ## Como rodar
 
+Sem Maven instalado? Use o wrapper (`./mvnw`).
+
 ```bash
-mvn spring-boot:run                                          # H2 em memoria (local, default)
-DB_PASSWORD='sua-senha' mvn spring-boot:run -Dspring-boot.run.profiles=dev   # PostgreSQL
+./mvnw spring-boot:run                                          # H2 em memoria (local, default)
+DB_PASSWORD='sua-senha' ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev   # PostgreSQL
 ```
 
 A API sobe em `http://localhost:8080`.
+
+## Variáveis de ambiente
+
+| Variável | Profile | Descrição |
+|---|---|---|
+| `JWT_SECRET` | todos | Segredo do JWT (>=32 chars). Em produção defina explicitamente; sem ela usa fallback de dev. |
+| `JWT_EXPIRATION_MS` | todos | Expiração do token em ms (default `3600000`). |
+| `DB_HOST` / `DB_PORT` / `DB_NAME` / `DB_USER` / `DB_PASSWORD` | `dev` | Conexão PostgreSQL. `DB_PASSWORD` é obrigatória (sem fallback). |
+| `JDBC_DATABASE_URL` / `JDBC_DATABASE_USERNAME` / `JDBC_DATABASE_PASSWORD` | `dev` | Injetadas pelo Heroku; têm precedência sobre as `DB_*`. |
 
 ## Endpoints
 
