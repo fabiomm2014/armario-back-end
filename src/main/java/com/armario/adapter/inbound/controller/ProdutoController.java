@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/produtos")
+@RequestMapping({"/api/produtos", "/produtos"})
 public class ProdutoController {
 
     private final SalvarProdutoUseCase salvarUseCase;
